@@ -1,0 +1,244 @@
+
+const int branco = 13;
+const int botao = 2;
+const int som = 3;
+
+const int verde1 = 10;
+const int amarelo1 = 11;
+const int vermelho1 = 12;
+const int verde2 = 7;
+const int amarelo2 = 8;
+const int vermelho2 = 9;
+
+const int luminosidade = A0;
+const int termometro = A1;
+
+bool on = false;//variavel booleana para mediar o funcion sistema
+
+void setup()
+{
+  pinMode(botao, INPUT);
+  pinMode(som, OUTPUT);
+
+  
+  pinMode(branco, OUTPUT);
+  
+  pinMode(vermelho1, OUTPUT);
+  pinMode(amarelo1, OUTPUT);
+  pinMode(verde1, OUTPUT);
+  
+  pinMode(vermelho2, OUTPUT);
+  pinMode(amarelo2, OUTPUT);
+  pinMode(verde2, OUTPUT);
+  
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  //variaveis
+  int prep = map(analogRead(luminosidade), 0, 1023, 2, 80);//temperatura local entre 20a35 °C
+  
+  int sensorValue = analogRead(termometro);
+  float volt = sensorValue * (5.0 / 1023.0);
+  float temp = (volt - 0.5) * 100.0;
+  
+  //INDICAR SE O SISTEMA TA LIGADO BOTAO-ON
+  if(on) {
+    digitalWrite(branco, HIGH);//se o sistema tiver ligado acende o led branco
+    if(digitalRead(2) == HIGH){
+      on = false;//se o botao for pressionado desliga
+      delay(100);
+    }
+  }else {
+    digitalWrite(branco, LOW);//se o sistema tiver desligado apaga o led branco
+    if(digitalRead(2) == HIGH){//se o botao foi pressionado(sistema ligado)
+      on = true;//sistema ligado -> entra no 'if'
+      delay(100);
+    }
+    
+  }//FIM SISTEMA LIGADO OU DESLIGADO
+  
+  
+  //SE TIVER LIGADO(ON==TRUE)
+  
+  
+  if(on) {
+    
+    
+     //SEMÁFORO VEÍCULO
+     Serial.print("Precipitacao: ");
+     Serial.print(prep);
+  	 Serial.println(" %     ");
+     Serial.print("Temperatura: ");
+     Serial.print(temp);
+  	 Serial.println(" °C\n");
+     
+    
+   	 digitalWrite(verde1, HIGH);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, LOW);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, LOW);
+     delay(10000);//10seg verde1
+    
+     Serial.print("Precipitacao: ");
+     Serial.print(prep);
+  	 Serial.println(" %     ");
+     Serial.print("Temperatura: ");
+     Serial.print(temp);
+  	 Serial.println(" °C\n");
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, HIGH);
+     digitalWrite(vermelho1, LOW);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, HIGH);
+     delay(800);
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, LOW);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, LOW);
+     delay(300);//amarelo pisca1
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, HIGH);
+     digitalWrite(vermelho1, LOW);
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, HIGH);
+     delay(800);
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, LOW);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, LOW);
+     delay(300);//amarelo pisca2
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, HIGH);
+     digitalWrite(vermelho1, LOW);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(8, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, HIGH);
+     delay(800);
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, LOW);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, HIGH);
+     digitalWrite(som, LOW);
+     delay(300);//amarelo pisca3
+    
+     //SEMAFORO PEDESTRE
+     Serial.print("Precipitacao: ");
+     Serial.print(prep);
+  	 Serial.println(" %     ");
+     Serial.print("Temperatura: ");
+     Serial.print(temp);
+  	 Serial.println(" °C\n");
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, HIGH);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, LOW);
+     delay(5500);//5.5seg verde1
+    
+     Serial.print("Precipitacao: ");
+     Serial.print(prep);
+  	 Serial.println(" %     ");
+     Serial.print("Temperatura: ");
+     Serial.print(temp);
+  	 Serial.println(" °C\n");
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, HIGH);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, HIGH);
+     delay(800);
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, LOW);
+     delay(300);//amarelo2 pisca1
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, HIGH);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, HIGH);
+     delay(800);
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, LOW);
+     delay(300);//amarelo2 pisca2
+    
+     Serial.print("Precipitacao: ");
+     Serial.print(prep);
+  	 Serial.println(" %     ");
+     Serial.print("Temperatura: ");
+     Serial.print(temp);
+  	 Serial.println(" °C\n");
+    
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, HIGH);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, HIGH);
+     delay(800);
+     digitalWrite(verde1, LOW);
+     digitalWrite(amarelo1, LOW);
+     digitalWrite(vermelho1, HIGH);//
+     digitalWrite(verde2, LOW);
+     digitalWrite(amarelo2, LOW);
+     digitalWrite(vermelho2, LOW);
+     digitalWrite(som, LOW);
+     delay(300);//amarelo2 pisca3
+    	
+  }
+  
+  //SE TIVER DESLIGADO(on==false)
+  else {
+    digitalWrite(branco, LOW);
+    digitalWrite(verde1, LOW);
+    digitalWrite(amarelo1, LOW);
+    digitalWrite(vermelho1, LOW);//
+    
+    
+    digitalWrite(verde2, LOW);
+    digitalWrite(amarelo1, LOW);
+    digitalWrite(vermelho2, LOW);
+    
+    digitalWrite(som, LOW);
+  }
+  
+}//FIM LOOP
